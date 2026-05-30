@@ -139,7 +139,7 @@ Mode: Unicorn
 ## Roadmap
 
 - [x] `domainforge` — stable, available now
-- [ ] `brandaudit` — analyze an existing brand name for weaknesses and rebranding opportunities
+- [x] `brandaudit` — stable, available now
 - [ ] `competitornames` — analyze naming patterns across your competitive landscape
 - [ ] `namingguide` — generate a naming guide (style, dos/don'ts) for a company or product line
 
