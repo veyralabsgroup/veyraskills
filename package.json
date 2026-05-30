@@ -1,18 +1,35 @@
 {
   "name": "@veyralabs/skills",
   "version": "0.1.0",
-  "description": "Reusable AI agent skills from VeyraLabs",
+  "description": "VeyraSkills — A curated collection of Claude Code skills for founders, developers and AI builders",
+  "bin": {
+    "veyraskills": "./bin/cli.js"
+  },
+  "files": [
+    "bin/",
+    "skills/",
+    "install.sh",
+    "validate.js"
+  ],
   "scripts": {
     "validate": "node validate.js"
   },
   "keywords": [
-    "ai",
-    "skills",
+    "claude-code",
+    "claude-skill",
+    "agent-skill",
+    "skills-sh",
+    "ai-agents",
+    "anthropic",
     "claude",
     "cursor",
     "windsurf",
     "copilot",
-    "agent"
+    "naming",
+    "domain-generator",
+    "startup-branding",
+    "brand-strategy",
+    "developer-tools"
   ],
   "author": "VeyraLabs <hello@veyralabs.com>",
   "license": "MIT",
