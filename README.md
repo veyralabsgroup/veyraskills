@@ -141,7 +141,7 @@ Mode: Unicorn
 - [x] `domainforge` — stable, available now
 - [x] `brandaudit` — stable, available now
 - [x] `competitornames` — stable, available now
-- [ ] `namingguide` — generate a naming guide (style, dos/don'ts) for a company or product line
+- [x] `namingguide` — stable, available now
 
 ---
 
