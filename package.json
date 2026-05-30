@@ -1,0 +1,30 @@
+{
+  "name": "@veyralabs/skills",
+  "version": "0.1.0",
+  "description": "Reusable AI agent skills from VeyraLabs",
+  "scripts": {
+    "validate": "node validate.js"
+  },
+  "keywords": [
+    "ai",
+    "skills",
+    "claude",
+    "cursor",
+    "windsurf",
+    "copilot",
+    "agent"
+  ],
+  "author": "VeyraLabs <hello@veyralabs.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/veyralabsgroup/veyraskills.git"
+  },
+  "bugs": {
+    "url": "https://github.com/veyralabsgroup/veyraskills/issues"
+  },
+  "homepage": "https://github.com/veyralabsgroup/veyraskills#readme",
+  "engines": {
+    "node": ">=18"
+  }
+}
