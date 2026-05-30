@@ -1,147 +1,165 @@
 # VeyraLabs Skills
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![Works with 35+ agents](https://img.shields.io/badge/works_with-35%2B_agents-brightgreen)](#supported-agents)
+[![Skills](https://img.shields.io/badge/skills-4_available-brightgreen)](#packs)
+[![Works with 30+ agents](https://img.shields.io/badge/works_with-30%2B_agents-blue)](#supported-agents)
 
-Reusable agent skills from [VeyraLabs](https://veyralabs.com). Install once, use everywhere — Claude Code, Cursor, Windsurf, Gemini CLI, GitHub Copilot, and 30+ more.
-
----
-
-## Skills
-
-### [domainforge](./skills/domainforge/SKILL.md) — AI Brand & Domain Intelligence
-
-Not a domain generator. A naming strategist.
-
-Most naming tools produce garbage: `SmartAIHub.com`, `NextGenApp.io`, `AIFlowPro.net`. DomainForge operates differently — it reasons about your project like a senior creative director, applies real scoring criteria, checks live domain availability, and explains *why* a name works.
-
-**What it does:**
-
-- Detects your project archetype (B2B SaaS, DevTool, Consumer AI, Fintech, Viral App, etc.) and adjusts naming style accordingly
-- Generates 20+ name candidates using phonetic construction, Latin/Greek roots, semantic blending, and modified real words
-- Scores every name across 8 factors: brandability, pronunciation, memorability, length, SEO potential, social availability, trademark risk, viral potential
-- Checks real-time domain availability across registrars (Porkbun, Namecheap, Cloudflare)
-- Checks social handle availability on X, GitHub, Instagram, LinkedIn
-- Flags trademark conflicts before you fall in love with a name
-- Writes a brand narrative for top candidates: *why* this name, *who* it speaks to, *where* it positions you
-- Iterates automatically when preferred names are taken
-
-**Search modes:** Unicorn · SEO · Viral · Premium · Indie Hacker · Futuristic
-
----
-
-## Installation
-
-### One-line (bash)
+A curated collection of agent skills for founders, developers, and builders. Claude Code, Cursor, Windsurf, Gemini CLI, GitHub Copilot, and 30+ more.
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/veyralabsgroup/veyraskills/main/install.sh)
 ```
 
-Install a specific skill:
+---
+
+## Packs
+
+### `naming-suite` — Brand & Naming Intelligence
+
+Four skills that work together. Find names, audit brands, map competitors, generate naming guides.
+
+| Skill | What it does |
+|-------|-------------|
+| [`domainforge`](./skills/domainforge/SKILL.md) | Generate and score startup names. Domain availability, social handles, trademark check, brand narrative |
+| [`brandaudit`](./skills/brandaudit/SKILL.md) | Audit an existing brand name across 8 dimensions. Severity scoring, rebrand verdict |
+| [`competitornames`](./skills/competitornames/SKILL.md) | Map the naming landscape in your market. Saturation levels, whitespace, naming brief for DomainForge |
+| [`namingguide`](./skills/namingguide/SKILL.md) | Generate a complete naming guide for a company or product line. Principles, system, dos/don'ts, approval checklist |
+
+**Recommended flow:**
+
+```
+competitornames → domainforge
+brandaudit      → namingguide
+```
+
+Run `competitornames` first to map the competitive landscape, then `domainforge` to generate names that stand out from it. Run `brandaudit` on an existing name, `namingguide` to lock in what works.
+
+---
+
+## Installation
+
+### One-line
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/veyralabsgroup/veyraskills/main/install.sh)
+```
+
+Installs all available skills into your current project.
+
+### Specific skill
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/veyralabsgroup/veyraskills/main/install.sh) --skill domainforge
 ```
 
-Install globally (available across all projects):
+### Global install (available across all projects)
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/veyralabsgroup/veyraskills/main/install.sh) --skill domainforge --global
+bash <(curl -fsSL https://raw.githubusercontent.com/veyralabsgroup/veyraskills/main/install.sh) --global
 ```
 
 ### Manual
 
-Copy the skill folder to your agent's skills directory:
+Copy the skill folder to your agent's skills directory and restart the agent.
 
-| Agent | Project path | Global path |
-|-------|-------------|-------------|
-| Claude Code | `.claude/skills/` | `~/.claude/skills/` |
-| Cursor | `.cursor/skills/` | `~/.cursor/skills/` |
-| Windsurf | `.windsurf/skills/` | `~/.codeium/windsurf/skills/` |
-
-Then restart your agent.
-
----
-
-## Supported Agents
-
-| Agent | Project path | Global path |
-|-------|-------------|-------------|
+| Agent | Project | Global |
+|-------|---------|--------|
 | Claude Code | `.claude/skills/` | `~/.claude/skills/` |
 | Cursor | `.cursor/skills/` | `~/.cursor/skills/` |
 | Windsurf | `.windsurf/skills/` | `~/.codeium/windsurf/skills/` |
 | Gemini CLI | `.gemini/skills/` | `~/.gemini/skills/` |
 | GitHub Copilot | `.github/skills/` | `~/.copilot/skills/` |
-| Codex | `.codex/skills/` | `~/.codex/skills/` |
-| Cline | `.cline/skills/` | `~/.cline/skills/` |
-| Goose | `.goose/skills/` | `~/.config/goose/skills/` |
-| OpenHands | `.openhands/skills/` | `~/.openhands/skills/` |
-| Roo Code | `.roo/skills/` | `~/.roo/skills/` |
 
 ---
 
 ## Usage
 
-Once installed, just work normally. Skills activate contextually.
+Once installed, skills activate contextually — no configuration needed.
 
-**Explicit triggers (DomainForge):**
+**DomainForge:**
 ```
 Find a domain for my new SaaS
 Name my CLI tool for environment variables
-I need a brand identity for my agency
 What should I call this project?
 ```
 
-**Implicit triggers — no prompt needed:**
+**BrandAudit:**
 ```
-I'm building a project management app for design teams
-[While writing SEO strategy] → adds keyword domain options
-[While writing landing page copy] → suggests aligned domain
+Audit the brand name "Acme" for a B2B SaaS
+Is our brand name working? Company is called Vercel for analytics tools
 ```
 
-**Explicit mode selection:**
+**CompetitorNames:**
 ```
-Domainforge unicorn mode: project management for remote teams
-Domainforge SEO mode: find keyword domains for my travel startup
-Domainforge viral mode: consumer app for splitting bills
+Map the naming landscape for developer config tools
+Who are my competitors and how are they named?
+```
+
+**NamingGuide:**
+```
+Create a naming guide for our company
+We're building a product line and need naming conventions
+Our feature naming is inconsistent — generate a guide
 ```
 
 ---
 
-## Example Output
+## Example Output — DomainForge
 
 ```
-## DomainForge Analysis — Design Team Project Management
+DomainForge Analysis — Developer Config Management
 
-Archetype: B2B SaaS / Design-adjacent
-Mode: Unicorn
+Archetype: DevTool / Infrastructure
+Mode: Indie Hacker
 
-### Top Recommendations
+Top Recommendations
 
-1. florae.io — 91/100
-   Latin roots for organic growth and living structure.
-   Elegant without being literal. At home in Figma, Linear, or Notion's world.
-   Domain: florae.io — available (~$38/yr Porkbun)
-   Social: @florae available on X, GitHub, Instagram
+1. krev.dev — 93/100
+   Hard consonant, 4 chars, terminal-native in lowercase.
+   Zero overlap with Vault/dotenv cluster. Premium DevTool energy.
+   Domain: krev.dev — available (~$12/yr Porkbun)
+   Social: @krev — available on X, GitHub
    Trademark: Clean
 
-2. tarka.app — 86/100
-   Hard phonetics, two clean syllables, works across languages.
-   Designed-product energy without trying too hard.
-   Domain: tarka.app — available (~$14/yr)
-   Social: @tarka — check availability
-   Trademark: Clean
+2. onyx.sh — 89/100
+   Single hard word, immediate memorability, shell-adjacent TLD.
+   Domain: onyx.sh — available (~$18/yr)
+   Social: @onyxdev — available
+   Trademark: Check in software category
 ```
+
+---
+
+## Supported Agents
+
+| Agent | Supported |
+|-------|-----------|
+| Claude Code | ✅ |
+| Cursor | ✅ |
+| Windsurf | ✅ |
+| Gemini CLI | ✅ |
+| GitHub Copilot | ✅ |
+| Codex | ✅ |
+| Cline | ✅ |
+| Goose | ✅ |
+| OpenHands | ✅ |
+| Roo Code | ✅ |
 
 ---
 
 ## Roadmap
 
-- [x] `domainforge` — stable, available now
-- [x] `brandaudit` — stable, available now
-- [x] `competitornames` — stable, available now
-- [x] `namingguide` — stable, available now
+**naming-suite** — stable, all 4 skills available now
+
+**brand-suite** *(coming soon)*
+- `brandvoice` — tone of voice guide generator
+- `brandpositioning` — positioning statement + competitive differentiation
+- `taglineforge` — tagline generation with scoring
+
+**gtm-suite** *(coming soon)*
+- `icp` — Ideal Customer Profile builder
+- `pricingstrategy` — pricing model analysis
+- `gtmplan` — go-to-market plan generator
 
 ---
 
@@ -149,7 +167,7 @@ Mode: Unicorn
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines on submitting new skills.
 
-To validate your skill before opening a PR:
+Validate before opening a PR:
 
 ```bash
 node validate.js
