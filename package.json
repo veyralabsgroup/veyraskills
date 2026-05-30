@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "VeyraSkills — A curated collection of Claude Code skills for founders, developers and AI builders",
   "bin": {
-    "veyraskills": "./bin/cli.js"
+    "veyraskills": "bin/cli.js"
   },
   "files": [
     "bin/",
@@ -35,7 +35,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/veyralabsgroup/veyraskills.git"
+    "url": "git+https://github.com/veyralabsgroup/veyraskills.git"
   },
   "bugs": {
     "url": "https://github.com/veyralabsgroup/veyraskills/issues"
