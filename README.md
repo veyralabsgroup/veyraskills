@@ -1,7 +1,7 @@
 # VeyraLabs Skills
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![Skills](https://img.shields.io/badge/skills-4_available-brightgreen)](#packs)
+[![Skills](https://img.shields.io/badge/skills-5_available-brightgreen)](#packs)
 [![Works with 30+ agents](https://img.shields.io/badge/works_with-30%2B_agents-blue)](#supported-agents)
 
 A curated collection of agent skills for founders, developers, and builders. Claude Code, Cursor, Windsurf, Gemini CLI, GitHub Copilot, and 30+ more.
@@ -33,6 +33,42 @@ brandaudit      → namingguide
 ```
 
 Run `competitornames` first to map the competitive landscape, then `domainforge` to generate names that stand out from it. Run `brandaudit` on an existing name, `namingguide` to lock in what works.
+
+---
+
+### `webcloner` — Website Visual Cloning
+
+Clone any landing page, marketing site, portfolio, or ecommerce storefront into a pixel-accurate Next.js replica. Structured 6-phase process: extract → spec → build → QA.
+
+| Skill | What it does |
+|-------|-------------|
+| [`webcloner`](./skills/webcloner/SKILL.md) | Clone any website's visual design. Scrapling extraction, spec-driven parallel build with git worktrees, visual regression QA |
+
+**Included scripts:**
+
+| Script | Purpose |
+|--------|---------|
+| `scripts/extract.py` | Scrapling-based extractor — DOM, computed CSS, assets, animations, tech stack |
+| `scripts/download-assets.mjs` | Download all images/videos/fonts with WebP conversion |
+| `scripts/compare.mjs` | Screenshot original vs clone at desktop + mobile |
+
+**Usage:**
+```
+Clone this landing page: https://example.com
+Replicate this design in Next.js: https://example.com
+I want my site to look like this: https://example.com
+```
+
+**In scope:** landings, marketing sites, portfolios, ecommerce storefronts
+**Not for:** SaaS dashboards, auth flows, real-time data apps
+
+**Prerequisites:** Python 3.10+ with Scrapling, Node 18+
+
+```bash
+npx @veyralabs/skills install webcloner
+```
+
+Also available as a standalone repo: [veyralabsgroup/webcloner](https://github.com/veyralabsgroup/webcloner)
 
 ---
 
@@ -150,6 +186,8 @@ Top Recommendations
 ## Roadmap
 
 **naming-suite** — stable, all 4 skills available now
+
+**webcloner** — stable, available now
 
 **brand-suite** *(coming soon)*
 - `brandvoice` — tone of voice guide generator
