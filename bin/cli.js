@@ -7,21 +7,49 @@ const os = require('os');
 
 const SKILLS_DIR = path.join(__dirname, '..', 'skills');
 
-const PACKS = {
-  'naming-suite': ['domainforge', 'brandaudit', 'competitornames', 'namingguide'],
+const AGENT_PATHS = {
+  claude:    { local: '.claude/skills',             global: '.claude/skills' },
+  cursor:    { local: '.cursor/skills',             global: '.cursor/skills' },
+  windsurf:  { local: '.windsurf/skills',           global: '.codeium/windsurf/skills' },
+  gemini:    { local: '.gemini/skills',             global: '.gemini/skills' },
+  copilot:   { local: '.github/skills',             global: '.copilot/skills' },
+  cline:     { local: '.cline/skills',              global: '.cline/skills' },
+  goose:     { local: '.goose/skills',              global: '.config/goose/skills' },
+  openhands: { local: '.openhands/skills',          global: '.openhands/skills' },
+  roo:       { local: '.roo/skills',                global: '.roo/skills' },
 };
 
-const AGENT_PATHS = {
-  claude:    { local: '.claude/skills',                  global: '.claude/skills' },
-  cursor:    { local: '.cursor/skills',                  global: '.cursor/skills' },
-  windsurf:  { local: '.windsurf/skills',                global: '.codeium/windsurf/skills' },
-  gemini:    { local: '.gemini/skills',                  global: '.gemini/skills' },
-  copilot:   { local: '.github/skills',                  global: '.copilot/skills' },
-  cline:     { local: '.cline/skills',                   global: '.cline/skills' },
-  goose:     { local: '.goose/skills',                   global: '.config/goose/skills' },
-  openhands: { local: '.openhands/skills',               global: '.openhands/skills' },
-  roo:       { local: '.roo/skills',                     global: '.roo/skills' },
-};
+// Auto-discover skills and packs from filesystem.
+// Standalone skill: skills/<name>/SKILL.md
+// Pack: skills/<pack>/<name>/SKILL.md (no SKILL.md at pack level)
+function discover() {
+  const skills = {};  // name → absolute path
+  const packs = {};   // packName → [skillName, ...]
+
+  if (!fs.existsSync(SKILLS_DIR)) return { skills, packs };
+
+  for (const entry of fs.readdirSync(SKILLS_DIR, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const entryPath = path.join(SKILLS_DIR, entry.name);
+
+    if (fs.existsSync(path.join(entryPath, 'SKILL.md'))) {
+      skills[entry.name] = entryPath;
+    } else {
+      const packSkills = [];
+      for (const sub of fs.readdirSync(entryPath, { withFileTypes: true })) {
+        if (!sub.isDirectory()) continue;
+        const subPath = path.join(entryPath, sub.name);
+        if (fs.existsSync(path.join(subPath, 'SKILL.md'))) {
+          skills[sub.name] = subPath;
+          packSkills.push(sub.name);
+        }
+      }
+      if (packSkills.length > 0) packs[entry.name] = packSkills;
+    }
+  }
+
+  return { skills, packs };
+}
 
 function detectAgent() {
   const cwd = process.cwd();
@@ -39,28 +67,14 @@ function resolveDestination(agent, isGlobal) {
     process.exit(1);
   }
   const rel = isGlobal ? entry.global : entry.local;
-  return isGlobal
-    ? path.join(os.homedir(), rel)
-    : path.join(process.cwd(), rel);
+  return isGlobal ? path.join(os.homedir(), rel) : path.join(process.cwd(), rel);
 }
 
-function copySkill(name, dest) {
-  const src = path.join(SKILLS_DIR, name);
-  if (!fs.existsSync(src)) {
-    console.error(`Skill not found: ${name}`);
-    console.error(`Available: ${availableSkills().join(', ')}`);
-    process.exit(1);
-  }
+function copySkill(name, skillPath, dest) {
   const target = path.join(dest, name);
   fs.mkdirSync(dest, { recursive: true });
-  fs.cpSync(src, target, { recursive: true });
+  fs.cpSync(skillPath, target, { recursive: true });
   console.log(`  ✓ ${name}`);
-}
-
-function availableSkills() {
-  return fs.readdirSync(SKILLS_DIR).filter(
-    f => fs.statSync(path.join(SKILLS_DIR, f)).isDirectory()
-  );
 }
 
 function printHelp() {
@@ -77,7 +91,7 @@ Options:
 
 Examples:
   npx @veyralabs/skills install naming-suite
-  npx @veyralabs/skills install domainforge --global
+  npx @veyralabs/skills install webcloner --global
   npx @veyralabs/skills install domainforge --agent cursor
 `);
 }
@@ -98,13 +112,19 @@ if (!command || command === 'help' || command === '--help' || command === '-h') 
   process.exit(0);
 }
 
+const { skills, packs } = discover();
+
 if (command === 'list') {
+  if (Object.keys(packs).length > 0) {
+    console.log('\nPacks:');
+    for (const [pack, members] of Object.entries(packs)) {
+      console.log(`  ${pack}  →  ${members.join(', ')}`);
+    }
+  }
   console.log('\nSkills:');
-  availableSkills().forEach(s => console.log(`  ${s}`));
-  console.log('\nPacks:');
-  Object.entries(PACKS).forEach(([pack, skills]) =>
-    console.log(`  ${pack}  →  ${skills.join(', ')}`)
-  );
+  for (const name of Object.keys(skills).sort()) {
+    console.log(`  ${name}`);
+  }
   console.log();
   process.exit(0);
 }
@@ -116,16 +136,21 @@ if (command === 'install') {
   let toInstall = [];
 
   if (!target) {
-    toInstall = availableSkills();
-  } else if (PACKS[target]) {
-    toInstall = PACKS[target];
-  } else {
+    toInstall = Object.keys(skills);
+  } else if (packs[target]) {
+    toInstall = packs[target];
+  } else if (skills[target]) {
     toInstall = [target];
+  } else {
+    console.error(`Not found: "${target}"`);
+    console.error(`Available skills: ${Object.keys(skills).join(', ')}`);
+    console.error(`Available packs:  ${Object.keys(packs).join(', ')}`);
+    process.exit(1);
   }
 
   const scope = isGlobal ? 'global' : 'project';
   console.log(`\nInstalling into ${dest} [${agent}/${scope}]\n`);
-  toInstall.forEach(s => copySkill(s, dest));
+  toInstall.forEach(name => copySkill(name, skills[name], dest));
   console.log('\nDone. Restart your agent to activate skills.\n');
   process.exit(0);
 }

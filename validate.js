@@ -11,13 +11,24 @@ const SKILLS_DIR = path.join(__dirname, 'skills');
 
 function findSkillFiles(dir) {
   const results = [];
-
   if (!fs.existsSync(dir)) return results;
 
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     if (!entry.isDirectory()) continue;
-    const candidate = path.join(dir, entry.name, 'SKILL.md');
-    if (fs.existsSync(candidate)) results.push(candidate);
+    const entryPath = path.join(dir, entry.name);
+    const direct = path.join(entryPath, 'SKILL.md');
+
+    if (fs.existsSync(direct)) {
+      // Standalone skill
+      results.push(direct);
+    } else {
+      // Pack folder — scan one level deeper
+      for (const sub of fs.readdirSync(entryPath, { withFileTypes: true })) {
+        if (!sub.isDirectory()) continue;
+        const candidate = path.join(entryPath, sub.name, 'SKILL.md');
+        if (fs.existsSync(candidate)) results.push(candidate);
+      }
+    }
   }
 
   return results;
@@ -45,7 +56,6 @@ function parseFrontmatter(content) {
 
     if (!key || key.includes(' ')) { i++; continue; }
 
-    // Handle block scalars (> and |)
     if (rawValue === '>' || rawValue === '|') {
       const blockLines = [];
       i++;
