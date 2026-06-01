@@ -2,7 +2,7 @@
 
 ![7 skills](https://img.shields.io/badge/skills-7-blue) ![npm](https://img.shields.io/npm/v/@veyralabs/skills) ![license](https://img.shields.io/badge/license-MIT-green)
 
-Skills for Claude Code and other AI coding agents. Each skill is a plain text file that teaches your agent a specialized workflow — naming, branding, website cloning, Shopify development, and more.
+Skills for Claude Code and other AI coding agents. Each skill is a plain text file that teaches your agent a specialized workflow - naming, branding, website cloning, Shopify development, and more.
 
 ```bash
 npx @veyralabs/skills install naming-suite
@@ -35,7 +35,7 @@ Works best in sequence: run `competitornames` to understand the landscape, then 
 
 ### shopify-suite
 
-Two skills covering the full Shopify stack — one for developers building themes and apps, one for merchants auditing and optimizing stores.
+Two skills covering the full Shopify stack - one for developers building themes and apps, one for merchants auditing and optimizing stores.
 
 | Skill | What it does |
 |-------|-------------|
@@ -124,14 +124,14 @@ npx @veyralabs/skills install domainforge
 ## Coming soon
 
 **brand-suite**
-- `brandvoice` — tone of voice guide generator
-- `brandpositioning` — positioning statement and competitive differentiation
-- `taglineforge` — tagline generation with scoring
+- `brandvoice` - tone of voice guide generator
+- `brandpositioning` - positioning statement and competitive differentiation
+- `taglineforge` - tagline generation with scoring
 
 **gtm-suite**
-- `icp` — Ideal Customer Profile builder
-- `pricingstrategy` — pricing model analysis
-- `gtmplan` — go-to-market plan generator
+- `icp` - Ideal Customer Profile builder
+- `pricingstrategy` - pricing model analysis
+- `gtmplan` - go-to-market plan generator
 
 ---
 
