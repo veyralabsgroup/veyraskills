@@ -141,6 +141,7 @@ Each skill is also published as a standalone npm package if you only want one:
 
 - `@veyralabs/naming-suite`
 - `@veyralabs/webcloner`
+- `@veyralabs/shopify-suite`
 - `@veyralabs/shopify-dev`
 - `@veyralabs/shopify-store`
 
