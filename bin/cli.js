@@ -5,7 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const SKILLS_DIR = path.join(__dirname, '..', 'skills');
+const SKILLS_DIR   = path.join(__dirname, '..', 'skills');
+const COMMANDS_DIR = path.join(__dirname, '..', 'commands');
 
 const AGENT_PATHS = {
   claude:    { local: '.claude/skills',             global: '.claude/skills' },
@@ -75,6 +76,23 @@ function copySkill(name, skillPath, dest) {
   fs.mkdirSync(dest, { recursive: true });
   fs.cpSync(skillPath, target, { recursive: true });
   console.log(`  ✓ ${name}`);
+}
+
+// Copy slash commands — Claude Code only (.claude/commands/)
+function copyCommands(agent, isGlobal) {
+  if (agent !== 'claude') return;
+  if (!fs.existsSync(COMMANDS_DIR)) return;
+
+  const cmdDest = isGlobal
+    ? path.join(os.homedir(), '.claude', 'commands')
+    : path.join(process.cwd(), '.claude', 'commands');
+
+  fs.mkdirSync(cmdDest, { recursive: true });
+  for (const f of fs.readdirSync(COMMANDS_DIR)) {
+    if (!f.endsWith('.md')) continue;
+    fs.copyFileSync(path.join(COMMANDS_DIR, f), path.join(cmdDest, f));
+  }
+  console.log(`  ✓ slash commands → ${cmdDest}`);
 }
 
 function printHelp() {
@@ -151,6 +169,7 @@ if (command === 'install') {
   const scope = isGlobal ? 'global' : 'project';
   console.log(`\nInstalling into ${dest} [${agent}/${scope}]\n`);
   toInstall.forEach(name => copySkill(name, skills[name], dest));
+  copyCommands(agent, isGlobal);
   console.log('\nDone. Restart your agent to activate skills.\n');
   process.exit(0);
 }

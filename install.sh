@@ -140,6 +140,28 @@ install_skill() {
   rm -rf "$tmp"
 }
 
+install_commands() {
+  local agent="$1"
+  local is_global="$2"
+  local tmp="$3"
+
+  # Slash commands are only supported by Claude Code
+  [[ "$agent" != "claude" ]] && return
+
+  local cmd_dir
+  if [[ "$is_global" == "true" ]]; then
+    cmd_dir="$HOME/.claude/commands"
+  else
+    cmd_dir=".claude/commands"
+  fi
+
+  if [[ -d "$tmp/commands" ]]; then
+    mkdir -p "$cmd_dir"
+    cp "$tmp/commands/"*.md "$cmd_dir/" 2>/dev/null || true
+    echo "  Slash commands → ${cmd_dir}/"
+  fi
+}
+
 install_all() {
   local dest_dir="$1"
   local tmp
@@ -150,7 +172,7 @@ install_all() {
 
   echo "  Cloning veyralabsgroup/veyraskills..."
   git clone --depth=1 --filter=blob:none --sparse "$GITHUB" "$tmp" -q
-  (cd "$tmp" && git sparse-checkout set "skills")
+  (cd "$tmp" && git sparse-checkout set "skills" "commands")
 
   if [[ ! -d "$tmp/skills" ]]; then
     echo "  Error: could not retrieve skills from repository."
@@ -159,6 +181,7 @@ install_all() {
 
   mkdir -p "$dest_dir"
   cp -r "$tmp/skills/." "$dest_dir/"
+  install_commands "$AGENT" "$GLOBAL" "$tmp"
 
   trap - EXIT
   rm -rf "$tmp"
