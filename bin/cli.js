@@ -11,8 +11,9 @@ const COMMANDS_DIR = path.join(__dirname, '..', 'commands');
 
 // pip packages required per skill
 const SKILL_PIP_DEPS = {
-  'shopify-store': ['scrapling'],
-  'webcloner':     ['scrapling'],
+  'shopify-store':    ['scrapling'],
+  'webcloner':        ['scrapling'],
+  'venture-analyst':  ['scrapling', 'ddgs', 'trendspyg', 'requests'],
 };
 
 const AGENT_PATHS = {

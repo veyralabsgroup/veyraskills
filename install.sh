@@ -118,6 +118,7 @@ check_deps() {
 declare -A SKILL_PIP_DEPS=(
   ["shopify-store"]="scrapling"
   ["webcloner"]="scrapling"
+  ["venture-analyst"]="scrapling ddgs trendspyg requests"
 )
 
 install_pip_deps() {
