@@ -1,10 +1,11 @@
 # VeyraSkills
 
-Skills for Claude Code and other AI coding agents. Each skill is a plain text file that teaches your agent a specialized workflow — naming, branding, website cloning, and more.
+Skills for Claude Code and other AI coding agents. Each skill is a plain text file that teaches your agent a specialized workflow — naming, branding, website cloning, Shopify development, and more.
 
 ```bash
 npx @veyralabs/skills install naming-suite
 npx @veyralabs/skills install webcloner
+npx @veyralabs/skills install shopify-suite
 ```
 
 Or install everything at once:
@@ -30,6 +31,15 @@ Four skills for naming products, auditing brands, mapping competitors, and build
 
 Works best in sequence: run `competitornames` to understand the landscape, then `domainforge` to generate names that stand out from it.
 
+### shopify-suite
+
+Two skills covering the full Shopify stack — one for developers building themes and apps, one for merchants auditing and optimizing stores.
+
+| Skill | What it does |
+|-------|-------------|
+| [shopify-dev](./skills/shopify-suite/shopify-dev/SKILL.md) | Shopify development across all layers: Liquid themes, JSON templates, app development with Remix, Storefront and Admin API, CLI workflows, checkout extensions, Hydrogen. Fetches live Shopify documentation via Context7 before answering version-sensitive questions |
+| [shopify-store](./skills/shopify-suite/shopify-store/SKILL.md) | Store audit and optimization. Works in two modes: Mode A uses shopify-mcp to read real store data (products, orders, apps, metafields); Mode B uses public extraction when MCP is not available. Audits 6 dimensions: catalog health, collection architecture, navigation, SEO, app stack, conversion signals |
+
 ### webcloner
 
 Clone any landing page, marketing site, portfolio, or ecommerce storefront into a pixel-accurate Next.js replica.
@@ -51,6 +61,9 @@ Works for landings, marketing sites, portfolios, and ecommerce product pages. No
 ```bash
 npx @veyralabs/skills install naming-suite
 npx @veyralabs/skills install webcloner
+npx @veyralabs/skills install shopify-suite
+npx @veyralabs/skills install shopify-dev
+npx @veyralabs/skills install shopify-store
 npx @veyralabs/skills install domainforge
 ```
 
@@ -126,6 +139,8 @@ Each skill is also published as a standalone npm package if you only want one:
 
 - `@veyralabs/naming-suite`
 - `@veyralabs/webcloner`
+- `@veyralabs/shopify-dev`
+- `@veyralabs/shopify-store`
 
 ---
 
