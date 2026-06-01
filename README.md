@@ -1,6 +1,6 @@
 # VeyraSkills
 
-![7 skills](https://img.shields.io/badge/skills-7-blue) ![npm](https://img.shields.io/npm/v/@veyralabs/skills) ![license](https://img.shields.io/badge/license-MIT-green)
+![8 skills](https://img.shields.io/badge/skills-8-blue) ![npm](https://img.shields.io/npm/v/@veyralabs/skills) ![license](https://img.shields.io/badge/license-MIT-green)
 
 Skills for Claude Code and other AI coding agents. Each skill is a plain text file that teaches your agent a specialized workflow - naming, branding, website cloning, Shopify development, and more.
 
@@ -8,6 +8,7 @@ Skills for Claude Code and other AI coding agents. Each skill is a plain text fi
 npx @veyralabs/skills install naming-suite
 npx @veyralabs/skills install webcloner
 npx @veyralabs/skills install shopify-suite
+npx @veyralabs/skills install venture-suite
 ```
 
 Or install everything at once:
@@ -42,6 +43,16 @@ Two skills covering the full Shopify stack - one for developers building themes 
 | [shopify-dev](./skills/shopify-suite/shopify-dev/SKILL.md) | Shopify development across all layers: Liquid themes, JSON templates, app development with Remix, Storefront and Admin API, CLI workflows, checkout extensions, Hydrogen. Fetches live Shopify documentation via Context7 before answering version-sensitive questions |
 | [shopify-store](./skills/shopify-suite/shopify-store/SKILL.md) | Store audit and optimization. Works in two modes: Mode A uses shopify-mcp to read real store data (products, orders, apps, metafields); Mode B uses public extraction when MCP is not available. Audits 6 dimensions: catalog health, collection architecture, navigation, SEO, app stack, conversion signals |
 
+### venture-suite
+
+Research a startup or SaaS idea before building. Collects evidence from HN, Reddit, GitHub, and web searches - no API keys required.
+
+| Skill | What it does |
+|-------|-------------|
+| [venture-analyst](./skills/venture-suite/venture-analyst/SKILL.md) | Four-phase idea validation: problem discovery (evidence from real sources), competitor intelligence (pricing, gaps, weaknesses), validation experiments (Mom Test, fake door, concierge MVP), and a Bull/Bear/Judge verdict with confidence score |
+
+Includes Python scripts for zero-key data collection and auto-detection of available enhancements (SearXNG via Docker, optional API keys). All methodology references included: Lean Startup, Customer Development, Mom Test, Blue Ocean Strategy, Traction.
+
 ### webcloner
 
 Clone any landing page, marketing site, portfolio, or ecommerce storefront into a pixel-accurate Next.js replica.
@@ -66,6 +77,8 @@ npx @veyralabs/skills install webcloner
 npx @veyralabs/skills install shopify-suite
 npx @veyralabs/skills install shopify-dev
 npx @veyralabs/skills install shopify-store
+npx @veyralabs/skills install venture-suite
+npx @veyralabs/skills install venture-analyst
 npx @veyralabs/skills install domainforge
 ```
 
@@ -144,6 +157,8 @@ Each skill is also published as a standalone npm package if you only want one:
 - `@veyralabs/shopify-suite`
 - `@veyralabs/shopify-dev`
 - `@veyralabs/shopify-store`
+- `@veyralabs/venture-suite`
+- `@veyralabs/venture-analyst`
 
 ---
 
