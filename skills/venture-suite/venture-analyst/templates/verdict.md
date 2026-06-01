@@ -201,6 +201,73 @@ Alternative path: [reduced scope or different entry point]
 
 ---
 
+## Phase 6 - Execution & Moat
+
+### Moat Intelligence
+
+| Moat type | Score (1-10) | Reason |
+|-----------|-------------|--------|
+| Distribution | [n] | [one line] |
+| Data | [n] | [one line] |
+| Community | [n] | [one line] |
+| Switching cost | [n] | [one line] |
+| Execution | [n] | [one line] |
+
+**Overall Moat Score:** [weighted avg of top 2]
+**Most realistic moat:** [type]
+**How to build it:** [specific action, not generic advice]
+
+### PMF Simulation
+
+**Persona A:** [job title / situation]
+- Current workflow: [specific]
+- Main pain: [from research quotes]
+- Adoption trigger: [what makes them switch]
+- Adoption blocker: [what stops them]
+- Simulated arc: discovers (Week 1) -> [Week 2] -> [Week 3: converts/churns] -> [Week 4]
+
+**Persona B:** [job title / situation]
+- [same structure]
+
+**Persona C:** [job title / situation]
+- [same structure]
+
+**PMF friction report:**
+- Main blockers: [list, note how many personas affected]
+- Easiest persona to convert first: [A/B/C] - because [reason]
+
+### Market Timing
+
+```
+Timing: [Too Early / Good Window / Late / Saturated]
+
+Signals:
++ [positive]
+- [negative]
+
+Window: [closes in X months / open for X years / unclear]
+Verdict: [one sentence]
+```
+
+### Execution Roadmap
+
+**Path:** [BUILD / VALIDATE FIRST / AVOID]
+**Critical constraint:** [the one thing that must be true]
+
+| Week | Actions | Decision gate |
+|------|---------|--------------|
+| 1 | [specific tasks] | [pass/fail condition] |
+| 2 | [specific tasks] | [pass/fail condition] |
+| 3 | [specific tasks] | [pass/fail condition] |
+| 4 | [goal] | [commit or reassess] |
+
+**Do NOT build yet:**
+- [feature/system] - [reason]
+
+**Reassess if:** [specific trigger condition]
+
+---
+
 ## Next Steps
 
 ### If BUILD
