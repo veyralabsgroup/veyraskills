@@ -9,13 +9,14 @@ Research a startup or SaaS idea and determine if it's worth building. No fluff -
 
 ## What this does
 
-Five phases, each producing structured output:
+Six phases, each producing structured output:
 
 1. **Problem Discovery** - Find evidence the problem actually exists (Reddit, HN, GitHub issues, trends)
 2. **Competitor Intelligence** - Map the landscape, find gaps, extract pricing signals
 3. **Validation Experiments** - Generate 3 prioritized experiments to test demand before building
 4. **Verdict** - Bull/Bear/Judge debate with Confidence Engine and scored recommendation
 5. **Decision Intelligence** - Contradiction detection, founder trap check, reality check, distribution plan, time-to-first-dollar
+6. **Execution & Moat** - 30-day roadmap, moat scoring, PMF simulation, market timing
 
 ## How to use
 
@@ -394,6 +395,117 @@ What would accelerate this: [specific factor]
 What would delay this: [specific risk]
 ```
 
+## Phase 6 - Execution & Moat
+
+**Goal:** Answer "should you dedicate the next 2 years of your life to this?" - not just "is it a good idea?"
+
+This phase converts the analysis into action and answers the defensibility question.
+
+### Execution Roadmap
+
+Use `references/execution-roadmap.md` for the full framework. Output a week-by-week plan tailored to the verdict:
+
+**If BUILD:**
+- Week 1: find 5 people with the problem (specific communities from the research)
+- Week 2: deliver value manually before building
+- Week 3: charge for it
+- Week 4: find customer 2-3 and a referral
+
+Key rule: no code until someone commits to paying. The roadmap builds toward a transaction, not a product.
+
+**If VALIDATE FIRST:**
+- Define the one critical unknown in one sentence
+- Run the cheapest test that could falsify it (2 weeks max)
+- Define pass/fail threshold before starting
+- Week 4: commit to BUILD or pivot/stop based on data
+
+**If AVOID:**
+- 2-week pivot investigation using the most interesting signal from the research
+- Or clean stop criteria with specific trigger conditions for revisiting
+
+Always include:
+```
+Do NOT build yet: [specific features to avoid and why]
+Reassess if: [specific trigger that means the plan is failing]
+```
+
+### Moat Intelligence
+
+Score all 5 moat types using `references/moat-patterns.md`. For each:
+
+```
+Distribution moat:  [1-10] - [one-line reason]
+Data moat:          [1-10] - [one-line reason]
+Community moat:     [1-10] - [one-line reason]
+Switching cost:     [1-10] - [one-line reason]
+Execution moat:     [1-10] - [one-line reason]
+
+Overall Moat Score: [weighted average of top 2]
+
+Most realistic moat: [type]
+How to build it: [specific action, not generic advice]
+```
+
+Do not score high without evidence. "We will accumulate data" is not a data moat - it is a plan. Score what exists or can realistically exist in 6 months.
+
+### PMF Simulation
+
+Generate 3 ICP personas based on the evidence found in Phases 1-2. Each persona is grounded in actual signals from the research, not invented.
+
+```
+Persona A: [job title / situation]
+- Current workflow for the problem: [specific, from research]
+- What they hate about current solution: [from Reddit/HN quotes]
+- What they pay today: [from competitor pricing research]
+- What they would never pay for: [inferred from pain signals]
+- Adoption trigger: [what would make them switch]
+- Adoption blocker: [what would stop them even if interested]
+```
+
+Then simulate a 4-week adoption arc for each persona:
+
+```
+Week 1: discovers product (channel: [specific channel from distribution plan])
+Week 2: [tries free / books demo / reads docs]
+Week 3: [converts / churns / stalls - and why]
+Week 4: [retained / referred / cancelled]
+```
+
+From the 3 simulations, identify the PMF friction points:
+```
+Main adoption blockers:
+- [blocker 1]: affects [n/3] personas
+- [blocker 2]: affects [n/3] personas
+
+Easiest persona to convert: [A/B/C] - because [reason]
+Start here.
+```
+
+### Market Timing
+
+Based on data already collected (trend, GitHub, competition):
+
+```
+Market timing: [Too Early / Good Window / Late / Saturated]
+
+Signals:
++ [positive timing signal]
++ [positive timing signal]
+- [negative timing signal]
+
+Window estimate: [closes in X months / open for X years / unclear]
+
+Timing verdict:
+[One sentence. Is this the right moment? Why?]
+```
+
+Timing patterns to detect:
+
+- **Too early:** trend rising but community not formed, infrastructure missing, no paying competitors yet
+- **Good window:** trend rising, 2-5 established players with clear weaknesses, market education done by competitors
+- **Late entry:** dominant player has >50% share and a free tier, market consolidating
+- **Saturated:** 10+ funded competitors, VC money flooding in, CAC rising, differentiation collapsing
+
 ## Enhancement detection
 
 Run at session start to unlock better sources:
@@ -436,6 +548,8 @@ From `calculate_evidence_score()` in `sources.py`:
 - `references/blue-ocean.md` - Value Curve, ERRC Grid, finding uncontested space
 - `references/traction.md` - 19 acquisition channels, Bullseye framework
 - `references/founder-traps.md` - 8 trap patterns with evidence criteria
+- `references/moat-patterns.md` - 5 moat types with scoring criteria 1-10
+- `references/execution-roadmap.md` - 30-day BUILD/VALIDATE/AVOID roadmap framework
 
 ## Output principles
 
@@ -447,3 +561,5 @@ From `calculate_evidence_score()` in `sources.py`:
 6. Check for founder traps before finalizing verdict
 7. Verdict must commit - no "it depends" without specifics and a path forward
 8. Distinguish Opportunity Score from Startup Score
+9. Phase 6 is not optional - the roadmap is what makes the analysis useful
+10. Moat scoring must be honest - score what exists, not what is planned
