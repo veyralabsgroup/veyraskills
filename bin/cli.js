@@ -4,9 +4,16 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const { execFileSync } = require('child_process');
 
 const SKILLS_DIR   = path.join(__dirname, '..', 'skills');
 const COMMANDS_DIR = path.join(__dirname, '..', 'commands');
+
+// pip packages required per skill
+const SKILL_PIP_DEPS = {
+  'shopify-store': ['scrapling'],
+  'webcloner':     ['scrapling'],
+};
 
 const AGENT_PATHS = {
   claude:    { local: '.claude/skills',             global: '.claude/skills' },
@@ -76,6 +83,31 @@ function copySkill(name, skillPath, dest) {
   fs.mkdirSync(dest, { recursive: true });
   fs.cpSync(skillPath, target, { recursive: true });
   console.log(`  ✓ ${name}`);
+}
+
+function installPipDeps(skillNames) {
+  const pkgs = [...new Set(skillNames.flatMap(n => SKILL_PIP_DEPS[n] || []))];
+  if (pkgs.length === 0) return;
+
+  let pip = null;
+  for (const cmd of ['pip3', 'pip']) {
+    try { execFileSync(cmd, ['--version'], { stdio: 'ignore' }); pip = cmd; break; } catch {}
+  }
+
+  if (!pip) {
+    console.log(`  ⚠ Python pip not found. Install manually: pip install ${pkgs.join(' ')}`);
+    return;
+  }
+
+  for (const pkg of pkgs) {
+    try {
+      console.log(`  Installing Python dependency: ${pkg}...`);
+      execFileSync(pip, ['install', pkg, '-q'], { stdio: 'inherit' });
+      console.log(`  ✓ ${pkg}`);
+    } catch {
+      console.log(`  ⚠ Failed to install ${pkg}. Run: ${pip} install ${pkg}`);
+    }
+  }
 }
 
 // Copy slash commands — Claude Code only (.claude/commands/)
@@ -170,6 +202,7 @@ if (command === 'install') {
   console.log(`\nInstalling into ${dest} [${agent}/${scope}]\n`);
   toInstall.forEach(name => copySkill(name, skills[name], dest));
   copyCommands(agent, isGlobal);
+  installPipDeps(toInstall);
   console.log('\nDone. Restart your agent to activate skills.\n');
   process.exit(0);
 }
