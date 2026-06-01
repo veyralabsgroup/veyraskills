@@ -1,6 +1,6 @@
 {
   "name": "@veyralabs/skills",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "VeyraSkills — A curated collection of Claude Code skills for founders, developers and AI builders",
   "bin": {
     "veyraskills": "bin/cli.js"
@@ -30,7 +30,12 @@
     "domain-generator",
     "startup-branding",
     "brand-strategy",
-    "developer-tools"
+    "developer-tools",
+    "shopify",
+    "shopify-theme",
+    "shopify-app",
+    "shopify-audit",
+    "ecommerce"
   ],
   "author": "VeyraLabs <hello@veyralabs.com>",
   "license": "MIT",
