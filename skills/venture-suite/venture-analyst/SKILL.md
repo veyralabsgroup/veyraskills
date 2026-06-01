@@ -5,16 +5,17 @@ description: Startup and SaaS idea validation. Researches market evidence, maps 
 
 # Venture Analyst
 
-Research a startup or SaaS idea and determine if it's worth building. No fluff — real evidence from real sources.
+Research a startup or SaaS idea and determine if it's worth building. No fluff - real evidence from real sources, structured reasoning, and a committed decision.
 
 ## What this does
 
-Four phases, each producing structured output:
+Five phases, each producing structured output:
 
-1. **Problem Discovery** - Find evidence the problem actually exists (Reddit, HN, GitHub issues)
+1. **Problem Discovery** - Find evidence the problem actually exists (Reddit, HN, GitHub issues, trends)
 2. **Competitor Intelligence** - Map the landscape, find gaps, extract pricing signals
 3. **Validation Experiments** - Generate 3 prioritized experiments to test demand before building
-4. **Verdict** - Bull/Bear/Judge debate producing a final recommendation with confidence score
+4. **Verdict** - Bull/Bear/Judge debate with Confidence Engine and scored recommendation
+5. **Decision Intelligence** - Contradiction detection, founder trap check, reality check, distribution plan, time-to-first-dollar
 
 ## How to use
 
@@ -23,63 +24,79 @@ Describe your idea. Include:
 - Who it's for (target customer)
 - What problem it solves
 
-Optional: budget for experiments, market type (B2C/B2B), known competitors.
+Optional: budget for experiments, market type (B2C/B2B), known competitors, founder background.
 
-## Phase 1 — Problem Discovery
+## Phase 1 - Problem Discovery
 
 **Goal:** Find evidence the problem is real and people talk about it unprompted.
 
 Use `scripts/sources.py` to collect evidence:
 
 ```python
-from scripts.sources import search_hn, search_hn_comments, search_reddit, search_github_issues, get_trends
+from scripts.sources import search_hn, search_hn_comments, search_reddit, search_github_issues, get_trends, calculate_evidence_score
 
-# HN: find discussions, Show HN, Ask HN about the problem space
-hn_stories = search_hn(query, limit=20)
-hn_comments = search_hn_comments(query, min_points=3, limit=30)
-
-# Reddit: find complaints, questions, "is there a tool for X" posts
+hn_stories   = search_hn(query, limit=20)
+hn_comments  = search_hn_comments(query, min_points=3, limit=30)
 reddit_posts = search_reddit(query, limit=25, timeframe="year")
-
-# GitHub: find feature requests and pain in related tools
-gh_issues = search_github_issues(query, limit=20)
-
-# Trends: is interest rising or declining?
-trend_data = get_trends(keyword)
+gh_issues    = search_github_issues(query, limit=20)
+trend_data   = get_trends(keyword)
 ```
+
+**Evidence Quality (not just quantity):**
+
+Evaluate source mix and signal strength, not just raw counts.
+
+| Source | Quality signal | Weight |
+|--------|---------------|--------|
+| HN Ask/Show with 50+ points | People actively seeking solutions | High |
+| Reddit complaints with 100+ upvotes | Widespread frustration | High |
+| GitHub issues with many reactions | Developers hitting the same wall | High |
+| HN/Reddit mentions of spending money | Willingness to pay | Very high |
+| Rising trend | Growing problem | High |
+| Trend flat | Established problem | Medium |
+| Trend declining | Dying problem | Negative |
+| Generic blog posts | Low signal noise | Low |
+
+Evidence Quality grades:
+- **A** - Multiple high-quality sources, direct pain quotes, spending signals
+- **B** - Good source mix, clear pain but limited spending signals
+- **C** - Some signal but concentrated in one source
+- **D** - Thin signal, only indirect evidence
+- **F** - Essentially no evidence
 
 **Synthesize findings:**
 
-Look for these signals (strongest first):
-- People spending money on bad solutions (evidence of willingness to pay)
-- Recurring complaints with no good answer
+Strongest pain signals (prioritize):
+- People actively spending money on imperfect solutions
+- Recurring complaints with no satisfying answer
 - "Is there a tool that does X?" posts with many upvotes
-- GitHub issues with many reactions and no resolution
-- Rising trend line
+- GitHub issues with many reactions, still open
 
 Red flags:
-- Zero discussion anywhere — not even a complaint
-- Problem exists but nobody's tried to solve it (often means it's not painful enough)
-- Only a few power users care, not a broad market
+- Zero discussion anywhere (even if search terms varied)
+- Problem exists but everyone's workaround is "good enough"
+- Only a few power users care, no broad market
+- Discussion peaked years ago (dying category)
 
 **Output format:**
 ```
 ## Problem Evidence
 
-**Evidence Score:** [0-100] (use calculate_evidence_score())
-**Trend:** [rising/stable/declining/no_data]
+Evidence Score: [0-100]
+Evidence Quality: [A/B/C/D/F]
 
-### What people say (direct quotes preferred)
-- [Source] "[quote or paraphrase]" — [upvotes/reactions]
+Source breakdown:
+- HN: [n] discussions, strongest: "[quote]"
+- Reddit: [n] posts, strongest: "[quote]"
+- GitHub: [n] issues, strongest reaction count: [n]
+- Trend: [rising/stable/declining], avg interest: [n]
 
-### Pain signals
-- [description of signal + source count]
-
-### Gaps found
-- [what existing solutions miss]
+Quality notes:
+- [what makes this evidence strong]
+- [what's missing]
 ```
 
-## Phase 2 — Competitor Intelligence
+## Phase 2 - Competitor Intelligence
 
 **Goal:** Map who's already solving this. Find pricing, positioning gaps, weak points.
 
@@ -87,57 +104,38 @@ Red flags:
 from scripts.scraper import scrape_competitor
 from scripts.sources import search_github_repos, search_web
 
-# Find competitors via web and GitHub
-repos = search_github_repos(f"{idea} tool", limit=8)
+repos       = search_github_repos(f"{idea} tool", limit=8)
 web_results = search_web(f"{idea} software alternatives", limit=8)
 
-# Scrape each competitor's pricing + positioning
 for url in competitor_urls:
     data = scrape_competitor(url)
-    # data has: title, tagline, description, pricing, features, tech_stack
+    # data: title, tagline, description, pricing, features, tech_stack
 ```
 
-**Competitive map structure:**
+**Competitive map:**
 ```
-| Name | Pricing | Target | Weakness | Stars |
-|------|---------|--------|----------|-------|
-| X    | $49/mo  | SMBs   | No API   | 2.1k  |
-```
-
-**Gaps to look for:**
-- Price ceiling: is there a tier missing?
-- Audience gap: power users vs beginners vs enterprise
-- Feature gap: what do G2/Reddit reviews complain about?
-- Distribution gap: who's not in a specific channel?
-
-**G2 reviews (when Playwright available):**
-```python
-from scripts.scraper import scrape_g2_reviews
-reviews = scrape_g2_reviews("https://www.g2.com/products/[product]/reviews")
-# Check for recurring "cons" patterns
+| Name | Pricing | Target | Weakness | Stars/Users |
+|------|---------|--------|----------|-------------|
 ```
 
-**Output format:**
-```
-## Competitor Map
+**Gaps to identify:**
+- Price ceiling: tier missing between free and enterprise?
+- Audience gap: power users vs beginners vs enterprise underserved?
+- Feature gap: what do reviews complain about repeatedly?
+- Distribution gap: channel nobody is using?
 
-### Direct competitors
-[table]
+**Opportunity Score vs Startup Score:**
 
-### Indirect / adjacent
-[list with one-line descriptions]
+These are two different things. Conflating them is a common mistake.
 
-### Market gaps
-- Gap 1: [description + evidence]
-- Gap 2: [description + evidence]
+- **Opportunity Score** = how good is the market? (demand, size, willingness to pay)
+- **Startup Score** = how viable is this as a startup? (scalability, defensibility, execution path)
 
-### Pricing landscape
-- Range: [$X - $Y/month]
-- Free tier pattern: [present/absent]
-- Typical model: [seat/flat/usage]
-```
+A market can be huge (high opportunity) but impossible to win as a bootstrapped startup (low startup score). Example: "A better Stripe" - huge opportunity, near-zero startup score for most founders.
 
-## Phase 3 — Validation Experiments
+Score both separately in the competitor output section.
+
+## Phase 3 - Validation Experiments
 
 **Goal:** Before writing code, find out if people will actually pay.
 
@@ -147,24 +145,62 @@ from scripts.experiments import generate_experiments, format_experiment_output
 experiments = generate_experiments(
     idea=idea,
     target_customer=target,
-    market_type="b2b",  # or "b2c"
-    competition_level="medium",  # low/medium/high
-    budget="zero",  # zero / low / medium
+    market_type="b2b",      # or "b2c"
+    competition_level="medium",
+    budget="zero",
 )
-
 print(format_experiment_output(experiments, idea))
 ```
 
-Always present experiments in priority order. Cheapest + highest-signal first.
+Present experiments in priority order. Cheapest + highest-signal first.
 
-**Mom Test enforcement** — when helping design interviews or outreach:
+**Mom Test enforcement** - when helping design interviews or outreach:
 - See `references/mom-test.md` for good vs bad questions
-- Detect and flag future-hypothetical questions ("would you use X?")
+- Flag any future-hypothetical question ("would you use X?")
 - Replace with past-behavior questions ("how do you currently handle X?")
 
-## Phase 4 — Verdict
+**Time-To-First-Dollar estimate:**
 
-**Goal:** Simulate a debate between Bull, Bear, and Judge. Reach a conclusion.
+For each experiment path, estimate realistic time to first revenue:
+
+| Market type | Typical range | What accelerates it |
+|------------|--------------|---------------------|
+| B2C consumer SaaS | 30-90 days | Viral loop, strong landing page CTR |
+| B2B SMB | 30-60 days | Warm outreach, concierge MVP |
+| B2B mid-market | 60-180 days | Champion inside company, ROI clear |
+| B2B enterprise | 6-18 months | Do not start here without traction |
+| Developer tool (paid) | 14-45 days | Show HN, Product Hunt, X/Twitter post |
+| Marketplace | 90-180+ days | Cold start problem, both sides |
+| Content-led SaaS | 60-120 days | SEO takes time, need existing audience |
+
+This is not the time to build - it's the time from starting experiments to first paying customer.
+
+## Phase 4 - Verdict
+
+**Goal:** Simulate a debate between Bull, Bear, and Judge. Reach a committed conclusion.
+
+### Confidence Engine
+
+The confidence score must explain itself. Not "Confidence: High" alone. Show the reasoning.
+
+```
+Confidence: [0-100]
+
+High confidence because:
++ [n] Reddit mentions across [n] subreddits
++ [n] GitHub issues with [n]+ reactions
++ [n] competitors validated with real pricing
++ Rising trend over [period]
++ [specific spending signal found]
+
+Confidence reduced because:
+- [specific gap, e.g. weak monetization signals]
+- [e.g. no willingness-to-pay evidence found]
+- [e.g. fragmented ICP - different pain in different segments]
+- [e.g. limited search volume data]
+```
+
+This matters because users need to see the reasoning is transparent, not magic.
 
 ### Bull case (write this first)
 - Strongest evidence for building it
@@ -173,46 +209,189 @@ Always present experiments in priority order. Cheapest + highest-signal first.
 - Best-case scenario with numbers
 
 ### Bear case (steelman the opposition)
-- Strongest evidence AGAINST
+- Strongest evidence AGAINST building it
 - Why existing solutions might be good enough
 - Market risks, timing risks, competition risks
 - Why it might fail even if the problem is real
 
 ### Judge verdict
-Read both cases. Apply these criteria:
+
+Apply these criteria:
 
 | Signal | Weight |
 |--------|--------|
 | Evidence score > 60 | +2 |
+| Evidence quality A or B | +1 |
 | Trend = rising | +1 |
 | Competitors have clear weakness | +1 |
 | No dominant player (>50% market) | +1 |
 | B2B with willingness-to-pay signals | +1 |
 | Price ceiling exists | +1 |
 | Evidence score < 30 | -3 |
+| Evidence quality D or F | -2 |
 | Trend = declining | -2 |
 | 1+ competitor with >100k users + free tier | -2 |
 | Problem is niche (<10k potential users) | -1 |
+| Founder trap detected (high priority) | -2 |
+| Reality check failed | -2 |
 
-**Verdict output:**
+**Verdict:**
 ```
-## Verdict
+Recommendation: BUILD / VALIDATE FIRST / AVOID
+Confidence: [0-100]
+Score: [+N or -N]
 
-**Recommendation:** [BUILD / VALIDATE FIRST / AVOID]
-**Confidence:** [High / Medium / Low]
-**Score:** [+N or -N]
+Judge's reasoning:
+[2-3 sentences. Direct. No hedging. Reference the specific evidence that tipped the scale.]
+```
 
-### Judge's reasoning
-[2-3 sentences. Direct. No hedging.]
+## Phase 5 - Decision Intelligence
 
-### If BUILD: suggested starting point
-[Specific first step. Not generic advice.]
+Run this after the Verdict. It does not change the verdict score - it adds context that makes the decision actionable.
 
-### If VALIDATE FIRST: critical unknown
-[The one thing that must be proven before spending time.]
+### Contradiction Detector
 
-### If AVOID: core problem
-[Why specifically this fails. What would have to change.]
+Look for contradictions between sources. The most valuable insight is often in the gap between what people say and what the market shows.
+
+Common contradiction patterns:
+
+**Pain high, market growing:**
+```
+Reddit: strong complaints about current solutions
+Competitors: growing, raising funding
+
+Interpretation: users hate existing tools but still pay.
+This is an improvement opportunity, not a replacement play.
+Consider: better UX, better pricing, better ICP focus.
+```
+
+**Pain high, no competitors:**
+```
+Evidence of real pain.
+Zero viable competitors found.
+
+Two interpretations:
+1. Blue ocean - opportunity exists
+2. Graveyard - others tried and died
+
+Check: search for failed startups in this space. If multiple failed,
+investigate why before treating this as opportunity.
+```
+
+**Trend rising, community silent:**
+```
+Google Trends shows growing interest.
+Reddit/HN have minimal discussion.
+
+Possible: problem is new, community hasn't formed yet (early).
+Risk: trend is noise, not genuine demand.
+```
+
+**Competition dense, pain still high:**
+```
+Multiple established competitors.
+Pain signals still strong and recent.
+
+Interpretation: nobody has actually solved it.
+Look for the structural reason: price, UX, missing feature, wrong ICP.
+```
+
+When a contradiction is found, output:
+```
+Contradiction detected: [name]
+
+[source A] shows: [signal]
+[source B] shows: [signal]
+
+Most likely interpretation: [explanation]
+What to verify: [specific experiment or question that resolves this]
+```
+
+### Founder Trap Detector
+
+Check `references/founder-traps.md` for full criteria.
+
+Evaluate the evidence against each trap pattern. Flag any trap where 3+ signals match.
+
+Output when trap found:
+```
+Founder Trap: [trap name]
+Evidence: [which signals matched]
+Risk level: [high/medium]
+Does not invalidate the opportunity, but changes the execution approach.
+```
+
+### Reality Check
+
+This is not about the market - it's about whether this founder can execute this idea.
+
+Gather context:
+- What is the founder's background? (from idea description if mentioned)
+- What does the idea require to work? (regulatory, infrastructure, capital, technical depth)
+
+Questions to answer:
+1. Does this require compliance, licensing, or regulatory approval?
+2. Does this require partnerships before it can function? (e.g. bank partners, data licenses)
+3. Does this require enterprise sales from day one?
+4. Does this require a team of 10+ to build the MVP?
+5. Is the technical complexity beyond a solo founder?
+
+If 2+ of these are true:
+```
+Reality check: Execution path is high-risk for early-stage founders
+
+Requires: [list what it requires]
+
+This does not mean the opportunity is bad.
+It means: do not start building until these constraints are addressed.
+
+Alternative paths:
+- [reduced scope version that avoids the constraint]
+- [validate the demand first, then find the right co-founder/partner]
+```
+
+### Distribution Plan
+
+Based on the research, recommend 3 specific acquisition channels.
+
+Use `references/traction.md` for channel criteria. Apply to this specific market:
+
+```
+Top channels for this idea:
+
+1. [channel] - because [specific evidence from research]
+   Test: [how to run a cheap test in 2 weeks]
+   
+2. [channel] - because [specific evidence]
+   Test: [how to test]
+   
+3. [channel] - because [specific evidence]
+   Test: [how to test]
+
+Avoid:
+- SEO - [reason, e.g. "competitive market, 6+ months to rank"]
+- Paid social - [reason, e.g. "B2B ICP hard to target on Meta"]
+```
+
+Do not recommend generic channels. Base it on where the pain evidence was actually found.
+
+Example: if most Reddit signal came from r/smallbusiness, recommend Reddit community strategy specifically.
+
+### Time-To-First-Dollar
+
+Based on the market type, competition, and experiment plan:
+
+```
+Time-To-First-Dollar estimate: [X-Y weeks/months]
+
+Path:
+Week 1-2: [specific action, e.g. "cold outreach to 50 Reddit users who posted about problem"]
+Week 3-4: [specific action]
+Week 5-8: [specific action]
+Target: first paying customer by [date estimate]
+
+What would accelerate this: [specific factor]
+What would delay this: [specific risk]
 ```
 
 ## Enhancement detection
@@ -225,11 +404,9 @@ from scripts.enhance_detect import detect_level, ensure_searxng, best_search
 env = detect_level()
 # Returns: docker, searxng, veyrascrape_mcp, github_token, exa_key, tavily_key, groq_key
 
-# If Docker available, auto-launch SearXNG for better web search
 if env["docker"] and not env["searxng"]:
     ensure_searxng()  # silent, no user prompt
 
-# Use best available search
 results = best_search(query, env, limit=10)
 ```
 
@@ -258,12 +435,15 @@ From `calculate_evidence_score()` in `sources.py`:
 - `references/mom-test.md` - good vs bad interview questions
 - `references/blue-ocean.md` - Value Curve, ERRC Grid, finding uncontested space
 - `references/traction.md` - 19 acquisition channels, Bullseye framework
+- `references/founder-traps.md` - 8 trap patterns with evidence criteria
 
 ## Output principles
 
 1. Lead with evidence, not opinions
-2. Quote real sources (HN post, Reddit thread, GitHub issue)
-3. Be specific about numbers (upvotes, stars, $prices)
-4. Separate fact from inference clearly
-5. Bull/Bear before Verdict — don't skip the debate
-6. Verdict must commit to a recommendation — no "it depends" without specifics
+2. Quote real sources (HN post, Reddit thread, GitHub issue) with specifics
+3. Separate fact from inference - never present interpretation as data
+4. Show the Confidence Engine reasoning - never just state "High confidence"
+5. Run the contradiction check - the most valuable insight is often in the gaps
+6. Check for founder traps before finalizing verdict
+7. Verdict must commit - no "it depends" without specifics and a path forward
+8. Distinguish Opportunity Score from Startup Score
