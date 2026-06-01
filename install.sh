@@ -114,6 +114,37 @@ check_deps() {
   fi
 }
 
+# Skills that require Python packages: skill_name -> pip packages (space-separated)
+declare -A SKILL_PIP_DEPS=(
+  ["shopify-store"]="scrapling"
+  ["webcloner"]="scrapling"
+)
+
+install_pip_deps() {
+  local skill="$1"
+  local pkgs="${SKILL_PIP_DEPS[$skill]:-}"
+  [[ -z "$pkgs" ]] && return
+
+  local pip=""
+  for cmd in pip3 pip; do
+    command -v "$cmd" &>/dev/null && pip="$cmd" && break
+  done
+
+  if [[ -z "$pip" ]]; then
+    echo "  Warning: pip not found. Install manually: pip install $pkgs"
+    return
+  fi
+
+  for pkg in $pkgs; do
+    echo "  Installing Python dependency: $pkg..."
+    if "$pip" install "$pkg" -q; then
+      echo "  ✓ $pkg"
+    else
+      echo "  Warning: failed to install $pkg. Run: $pip install $pkg"
+    fi
+  done
+}
+
 install_skill() {
   local skill="$1"
   local dest_dir="$2"
@@ -236,11 +267,15 @@ main() {
   if [[ -n "$SKILL_NAME" ]]; then
     echo "Installing '$SKILL_NAME' → $dest/"
     install_skill "$SKILL_NAME" "$dest"
+    install_pip_deps "$SKILL_NAME"
     echo ""
     echo "Done. ${dest}/${SKILL_NAME}/ is ready."
   else
     echo "Installing all skills → $dest/"
     install_all "$dest"
+    for skill in "${!SKILL_PIP_DEPS[@]}"; do
+      install_pip_deps "$skill"
+    done
     echo ""
     echo "Done. All skills installed to ${dest}/"
   fi
