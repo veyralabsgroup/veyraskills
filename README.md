@@ -1,5 +1,7 @@
 # VeyraSkills
 
+![7 skills](https://img.shields.io/badge/skills-7-blue) ![npm](https://img.shields.io/npm/v/@veyralabs/skills) ![license](https://img.shields.io/badge/license-MIT-green)
+
 Skills for Claude Code and other AI coding agents. Each skill is a plain text file that teaches your agent a specialized workflow — naming, branding, website cloning, Shopify development, and more.
 
 ```bash
