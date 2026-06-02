@@ -199,6 +199,32 @@ Alternative path: [reduced scope or different entry point]
 **What would accelerate this:** [factor]
 **What would delay this:** [risk]
 
+### Assumption Map
+
+```
+A1 (most dangerous): [core belief about problem/customer]
+Confidence: [0-100]
+Based on: [evidence or lack of it]
+Validates if: [observable outcome]
+Kills startup if: [falsified by X]
+
+A2: [monetization or switching assumption]
+Confidence: [0-100]
+Based on: [evidence or lack of it]
+Validates if: [observable outcome]
+Kills startup if: [falsified by X]
+
+A3: [distribution or growth assumption]
+Confidence: [0-100]
+Based on: [evidence or lack of it]
+Validates if: [observable outcome]
+Kills startup if: [falsified by X]
+```
+
+**Know:** [what the evidence clearly supports]
+**Believe:** [what is inferred but not proven]
+**Imagining:** [what has no data behind it]
+
 ---
 
 ## Phase 6 - Execution & Moat
@@ -266,6 +292,24 @@ Verdict: [one sentence]
 
 **Reassess if:** [specific trigger condition]
 
+### Kill Criteria
+
+```
+If after [n] days from starting:
+
+< [n] real customer interviews completed
+< [n] people willing to schedule a call
+  Zero payment intent (pre-order, deposit, or signed LOI)
+  [idea-specific negative signal]
+
+-> Stop. Do not pivot yet.
+   First answer: was the problem real or did we imagine it?
+
+Pivot trigger (instead of stop):
+If problem is validated but [specific step] fails
+-> [specific narrower pivot]
+```
+
 ---
 
 ## Next Steps
@@ -305,3 +349,24 @@ If not: [specific pivot or kill condition].
 
 **Adjacent opportunity (if found):**
 [Related problem the research surfaced that IS worth pursuing.]
+
+### Pivot Engine
+
+[If no evidence-backed pivot exists: "No evidence-backed pivot found. Consider a different problem space entirely."]
+
+[If pivots found:]
+```
+Pivot Option 1: [segment / problem / channel / scope]
+From: [current idea]
+To: [specific pivot]
+Evidence: [signal from research that supports this]
+Risk: [what could still be wrong]
+
+Pivot Option 2: [segment / problem / channel / scope]
+From: [current idea]
+To: [specific pivot]
+Evidence: [signal from research that supports this]
+Risk: [what could still be wrong]
+
+Recommended: Option [1/2] - [one sentence reason]
+```
