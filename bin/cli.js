@@ -105,14 +105,14 @@ function installPipDeps(skillNames) {
   }
 
   for (const pkg of pkgs) {
+    console.log(`  Installing Python dependency: ${pkg}...`);
     try {
-      console.log(`  Installing Python dependency: ${pkg}...`);
-      execFileSync(pip, ['install', pkg, '-q'], { stdio: 'inherit' });
+      execFileSync(pip, ['install', pkg, '-q'], { stdio: 'pipe' });
       console.log(`  ✓ ${pkg}`);
     } catch {
-      // PEP 668: managed environment blocks pip. Retry with --break-system-packages.
+      // PEP 668: managed environment blocks pip. Retry silently with --break-system-packages.
       try {
-        execFileSync(pip, ['install', pkg, '-q', '--break-system-packages'], { stdio: 'inherit' });
+        execFileSync(pip, ['install', pkg, '-q', '--break-system-packages'], { stdio: 'pipe' });
         console.log(`  ✓ ${pkg}`);
       } catch {
         console.log(`  ⚠ Failed to install ${pkg}. Run: ${pip} install ${pkg} --break-system-packages`);
