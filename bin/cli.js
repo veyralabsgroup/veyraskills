@@ -14,6 +14,10 @@ const SKILL_PIP_DEPS = {
   'shopify-store':    ['scrapling'],
   'webcloner':        ['scrapling'],
   'venture-analyst':  ['scrapling', 'ddgs', 'trendspyg', 'requests'],
+  'agency-audit':     ['scrapling', 'requests', 'ddgs'],
+  'cold-outreach':    ['scrapling', 'requests', 'ddgs'],
+  'meeting-prep':     ['scrapling', 'requests', 'ddgs'],
+  'ad-analyzer':      ['scrapling', 'requests'],
 };
 
 const AGENT_PATHS = {
