@@ -110,7 +110,13 @@ function installPipDeps(skillNames) {
       execFileSync(pip, ['install', pkg, '-q'], { stdio: 'inherit' });
       console.log(`  ✓ ${pkg}`);
     } catch {
-      console.log(`  ⚠ Failed to install ${pkg}. Run: ${pip} install ${pkg}`);
+      // PEP 668: managed environment blocks pip. Retry with --break-system-packages.
+      try {
+        execFileSync(pip, ['install', pkg, '-q', '--break-system-packages'], { stdio: 'inherit' });
+        console.log(`  ✓ ${pkg}`);
+      } catch {
+        console.log(`  ⚠ Failed to install ${pkg}. Run: ${pip} install ${pkg} --break-system-packages`);
+      }
     }
   }
 }
