@@ -395,6 +395,42 @@ What would accelerate this: [specific factor]
 What would delay this: [specific risk]
 ```
 
+### Assumption Map
+
+Every startup decision rests on assumptions. Most founders know the surface ones. The dangerous ones are buried.
+
+Identify the 3 critical assumptions this startup cannot survive without. For each:
+- What the startup is betting on being true
+- Confidence level based on actual evidence collected (not gut feel)
+- What would validate or invalidate it
+
+```
+Critical Assumption A1:
+[The core belief about the problem/customer]
+Confidence: [0-100]
+Based on: [evidence or lack of it]
+Validates if: [specific observable outcome]
+Kills startup if: [falsified by X]
+
+Critical Assumption A2:
+[Usually the monetization or switching assumption]
+Confidence: [0-100]
+Based on: [evidence or lack of it]
+Validates if: [specific observable outcome]
+Kills startup if: [falsified by X]
+
+Critical Assumption A3:
+[Usually the distribution or growth assumption]
+Confidence: [0-100]
+Based on: [evidence or lack of it]
+Validates if: [specific observable outcome]
+Kills startup if: [falsified by X]
+```
+
+Rank them: most dangerous assumption first (lowest confidence that is also most critical to survival).
+
+This is not a list of things to do. It is a map of what the founder believes vs what the evidence supports.
+
 ## Phase 6 - Execution & Moat
 
 **Goal:** Answer "should you dedicate the next 2 years of your life to this?" - not just "is it a good idea?"
@@ -428,6 +464,65 @@ Always include:
 Do NOT build yet: [specific features to avoid and why]
 Reassess if: [specific trigger that means the plan is failing]
 ```
+
+### Kill Criteria
+
+Most founders know when to start. Almost none know when to stop.
+
+Generate kill criteria calibrated to the specific idea and market type. These are not generic - they come from the evidence and experiment plan.
+
+```
+Kill Criteria for [idea]:
+
+If after [days] from starting:
+
+Experiments:
+- Fewer than [n] real customer interviews completed
+- Fewer than [n] people willing to schedule a call
+- Zero payment intent (pre-order, deposit, contract signed)
+
+Signals:
+- [specific negative signal tied to the idea]
+- [specific negative signal]
+
+-> Stop. Do not pivot yet. First answer: was the problem real or did we imagine it?
+
+Pivot trigger (instead of stop):
+If the problem gets validated but [specific conversion/monetization step] fails -> pivot to [specific narrower scope or different monetization]
+```
+
+Thresholds must be concrete numbers, not vague goals. "Not enough traction" is not a kill criterion. "Zero paying customers after 21 days of direct outreach" is.
+
+### Pivot Engine
+
+Run this when verdict = AVOID or when Kill Criteria are hit.
+
+Based on the signals collected in Phases 1-2, identify 2-3 realistic pivot directions. Pivots must be grounded in actual evidence - not invented alternatives.
+
+Pivot types to consider (from `references/lean-startup.md`):
+- **Segment pivot** - same problem, different customer (who else has this pain?)
+- **Problem pivot** - same customer, different problem (what else do they complain about?)
+- **Channel pivot** - same product, different distribution (where are buyers actually found?)
+- **Scope pivot** - same idea, 80% smaller (which one feature has the most evidence?)
+
+Output format:
+```
+Pivot Option 1: [type]
+From: [current idea]
+To: [specific pivot]
+Evidence: [signal from research that supports this direction]
+Risk: [what could still be wrong]
+
+Pivot Option 2: [type]
+From: [current idea]
+To: [specific pivot]
+Evidence: [signal from research that supports this direction]
+Risk: [what could still be wrong]
+
+Recommended pivot: [1 or 2] - because [one sentence reason]
+```
+
+Do not generate pivots if no supporting evidence exists. If the research found nothing reusable, state: "No evidence-backed pivot found. Consider a different problem space entirely."
 
 ### Moat Intelligence
 
@@ -563,3 +658,4 @@ From `calculate_evidence_score()` in `sources.py`:
 8. Distinguish Opportunity Score from Startup Score
 9. Phase 6 is not optional - the roadmap is what makes the analysis useful
 10. Moat scoring must be honest - score what exists, not what is planned
+11. Tag every factual claim: `[EVIDENCE]` (backed by collected data), `[INFERENCE]` (logical conclusion from data), or `[SPECULATION]` (no direct data, informed guess). Never mix them silently. This applies to the Bull case, Bear case, moat scoring, PMF simulation, and market timing sections.
