@@ -9,13 +9,14 @@ Audit a prospect or client website end-to-end and produce a structured report an
 
 ## What this does
 
-Five phases, each producing structured output:
+Six phases, each producing structured output:
 
 1. **Web Inspection** - Extract tech stack, SEO basics, copy quality, CTAs, trust signals, performance hints
 2. **Competitor Comparison** - Find 3-5 competitors, compare positioning, identify gaps
 3. **Problem Map** - Rank problems by severity and impact (quick win vs. strategic)
 4. **Opportunity Map** - Map problems to specific services an agency can offer
-5. **Proposal Draft** - Generate a pitch-ready document with problems, services, and next steps
+5. **Deal Strategy** - Opportunity Score, close probability, entry door service, revenue projection
+6. **Proposal Draft** - Generate a pitch-ready document with problems, services, and next steps
 
 ## How to use
 
@@ -226,7 +227,127 @@ If the agency provided their service list, match only to those services.
 
 Also flag: "Services this company needs but are outside typical agency scope" - so the agency knows what to refer out.
 
-## Phase 5 - Proposal Draft
+## Phase 5 - Deal Strategy
+
+**Goal:** Turn the audit into a sales decision. Not what the company needs - what the agency should sell, in what order, at what price, and whether this prospect is worth pursuing.
+
+This phase runs after the Opportunity Map and before the Proposal Draft. It answers three questions the agency has but the proposal cannot ask out loud:
+
+1. Is this prospect worth our time?
+2. What is the fastest path to a signed contract?
+3. What is the realistic revenue over 12 months?
+
+### Opportunity Score
+
+Score the prospect 0-100 based on signals collected. This is not the quality of their website - it is the quality of the sales opportunity.
+
+Scoring factors:
+
+| Signal | Points |
+|--------|--------|
+| Running paid ads with no conversion tracking | +20 (money leaving without measurement = urgent) |
+| Has blog/content activity but no analytics | +15 (already investing, wants to know ROI) |
+| No Meta Pixel (plans or runs ads) | +15 (entry door, creates immediate dependency) |
+| Wix/Squarespace on a growing B2B company | +10 (platform pain, redesign opportunity) |
+| No case studies on service business | +10 (closing friction they feel) |
+| Social inactive 3+ months | +8 (knows they should, guilt installed) |
+| Outdated design (5+ years signals) | +8 (embarrassment pain) |
+| No email capture | +5 (losing leads they paid for) |
+| Already working with an agency (signals in tech stack) | -10 (switching cost, loyalty) |
+| Wix free tier + no ads + solo operator | -15 (likely no budget) |
+| No business signals (no phone, no address, no team) | -20 (may not be a real business) |
+
+Score interpretation:
+- 70-100: Strong opportunity, prioritize
+- 40-69: Qualified, worth a conversation
+- 20-39: Low priority, batch with others
+- Under 20: Pass
+
+### Close Probability
+
+Based on the Opportunity Score and specific signals, estimate close probability:
+
+**High probability signals:**
+- Running ads without tracking (money problem, clear ROI story)
+- Recent investment in website or content (they are in buying mode)
+- Hired or posting for a marketing role (underserved internally)
+- Competitors clearly outperform them online (competitive threat visible)
+
+**Medium probability signals:**
+- Problems exist but are not causing visible pain yet
+- Wix/Squarespace frustration without a specific trigger
+- Social inactive but no plans mentioned
+
+**Low probability signals:**
+- Already working with another agency
+- No analytics and no ads = not measuring anything (may not value marketing)
+- Very small operation (1 person, local only)
+
+Output:
+```
+Close probability: [High / Medium / Low]
+Reasoning: [one sentence - specific signal that drove the rating]
+```
+
+### Entry Door Service
+
+The entry door is the first thing to sell - not the biggest opportunity, but the easiest yes.
+
+Rules:
+- Low cost (under 500€ or under 2 days work)
+- Fast delivery (client sees result in under 1 week)
+- Creates dependency (they need you to interpret or maintain it)
+- Opens the door to the next service
+
+Best entry doors by situation:
+
+| Situation | Entry door | Why it opens the door |
+|-----------|-----------|----------------------|
+| No analytics | GA4 + GTM setup (200-400€) | They cannot read reports without you |
+| No Meta Pixel | Pixel + events setup (200-300€) | Retargeting audiences start building day 1 |
+| Broken tracking | Analytics audit + fix (300-500€) | Before they can run any campaign |
+| Quick wins only | Homepage CTA + meta descriptions (200-300€) | Low risk, visible result fast |
+
+```
+Entry door: [service]
+Price: [range]
+Delivery: [X days]
+Why it works: [one sentence - what dependency it creates]
+```
+
+### Revenue Projection
+
+Estimate realistic revenue from this client over 12 months:
+
+```
+Month 1: [entry door service] - [price range]
+Months 2-4: [next service] - [price range/month]
+Months 5-12: [retainer potential] - [price range/month]
+
+12-month projection: [low estimate] - [high estimate]
+Annual contract value: [range]
+```
+
+Do not inflate projections. Base them on what the Opportunity Map shows. If the company only needs 2 services, say so.
+
+### Deal Summary
+
+```
+Opportunity Score: [0-100]
+Close probability: [High / Medium / Low]
+Reasoning: [specific signal]
+
+Entry door: [service] - [price]
+Priority services: [1, 2, 3 in order]
+Estimated ticket (project): [range]
+Retainer potential: [range/month]
+12-month value: [range]
+
+Recommended approach:
+[One sentence: how to open the conversation based on the strongest signal found]
+```
+
+## Phase 6 - Proposal Draft
 
 **Goal:** Produce a document the agency can customize and send. Not a raw report - a pitch.
 

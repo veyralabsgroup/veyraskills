@@ -67,6 +67,33 @@ Changes that take under 1 day and produce visible results:
 
 ---
 
+## Deal Strategy
+
+```
+Opportunity Score: [0-100]
+Close probability: [High / Medium / Low]
+Reasoning: [specific signal that drove the rating]
+
+Entry door: [service] - [price range] - [X days delivery]
+Why it works: [one sentence - what dependency it creates]
+
+Priority services:
+1. [service] - [price range]
+2. [service] - [price range]
+3. [service] - [price range]
+
+Revenue projection:
+Month 1: [entry door] - [price]
+Months 2-4: [next service] - [price/month]
+Months 5-12: [retainer] - [price/month]
+12-month value: [low] - [high]
+
+Recommended opening:
+[One sentence: how to start the conversation based on the strongest signal]
+```
+
+---
+
 ## Recommended Services
 
 [2-3 services maximum. Match to problems found. Match to what the agency delivers.]
