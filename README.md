@@ -60,9 +60,9 @@ Clone any landing page, marketing site, portfolio, or ecommerce storefront into 
 
 | Skill | What it does |
 |-------|-------------|
-| [webcloner](./skills/webcloner/SKILL.md) | Six-phase visual cloning: recon with Scrapling, foundation setup, spec generation per section, parallel component build with git worktrees, assembly, and visual QA |
+| [webcloner](./skills/webcloner/SKILL.md) | Seven-phase visual cloning: recon + computed styles extraction, foundation setup, parallel 5-agent spec (layout/typography/color/spacing/component), parallel component build, assembly, pixel-accurate QA, automated visual feedback loop |
 
-Includes three scripts: a Scrapling-based extractor (`extract.py`), an asset downloader with WebP conversion (`download-assets.mjs`), and a side-by-side screenshot comparison tool (`compare.mjs`).
+Includes five scripts: `extract.py` (Scrapling DOM/CSS/asset extractor), `extract-styles.mjs` (exact computed styles via Playwright injection), `download-assets.mjs` (asset downloader with WebP conversion), `compare.mjs` (pixelmatch pixel diff with PASS/WARN/FAIL verdict and red diff image), `visual-loop.mjs` (automated N-iteration loop — Claude Vision reads the diff, patches code, repeats until PASS).
 
 Works for landings, marketing sites, portfolios, and ecommerce product pages. Not designed for SaaS dashboards, auth flows, or real-time data apps.
 
