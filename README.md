@@ -1,14 +1,15 @@
 # VeyraSkills
 
-![8 skills](https://img.shields.io/badge/skills-8-blue) ![npm](https://img.shields.io/npm/v/@veyralabs/skills) ![license](https://img.shields.io/badge/license-MIT-green)
+![skills](https://img.shields.io/badge/skills-13-blue) ![npm](https://img.shields.io/npm/v/@veyralabs/skills) ![license](https://img.shields.io/badge/license-MIT-green)
 
-Skills for Claude Code and other AI coding agents. Each skill is a plain text file that teaches your agent a specialized workflow - naming, branding, website cloning, Shopify development, and more.
+Skills for Claude Code and other AI coding agents. Each skill is a plain text file that teaches your agent a specialized workflow — naming, branding, website cloning, Shopify development, marketing intelligence, idea validation, and more.
 
 ```bash
 npx @veyralabs/skills install naming-suite
 npx @veyralabs/skills install webcloner
 npx @veyralabs/skills install shopify-suite
 npx @veyralabs/skills install venture-suite
+npx @veyralabs/skills install marketing-suite
 ```
 
 Or install everything at once:
@@ -36,7 +37,7 @@ Works best in sequence: run `competitornames` to understand the landscape, then 
 
 ### shopify-suite
 
-Two skills covering the full Shopify stack - one for developers building themes and apps, one for merchants auditing and optimizing stores.
+Two skills covering the full Shopify stack — one for developers building themes and apps, one for merchants auditing and optimizing stores.
 
 | Skill | What it does |
 |-------|-------------|
@@ -45,7 +46,7 @@ Two skills covering the full Shopify stack - one for developers building themes 
 
 ### venture-suite
 
-Research a startup or SaaS idea before building. Collects evidence from HN, Reddit, GitHub, and web searches - no API keys required.
+Research a startup or SaaS idea before building. Collects evidence from HN, Reddit, GitHub, and web searches — no API keys required.
 
 | Skill | What it does |
 |-------|-------------|
@@ -65,6 +66,18 @@ Includes three scripts: a Scrapling-based extractor (`extract.py`), an asset dow
 
 Works for landings, marketing sites, portfolios, and ecommerce product pages. Not designed for SaaS dashboards, auth flows, or real-time data apps.
 
+### marketing-suite
+
+Five skills for marketing agencies and sales teams — from prospect research to retainer strategy.
+
+| Skill | What it does |
+|-------|-------------|
+| [agency-audit](./skills/marketing-suite/agency-audit/SKILL.md) | Audit any company website. Extracts SEO, tech stack, copy signals, competitor comparison. Generates a pitch-ready proposal with opportunity score, close probability, entry door service, and revenue projection |
+| [retainer-finder](./skills/marketing-suite/retainer-finder/SKILL.md) | Analyze what depreciates without maintenance, map high-dependency services, generate a retainer brief with MRR estimate and transition path from first project to monthly contract |
+| [meeting-prep](./skills/marketing-suite/meeting-prep/SKILL.md) | Research a prospect and generate a 5-minute sales brief with evidence-based pain points, research-specific questions, and one insight that builds rapport |
+| [cold-outreach](./skills/marketing-suite/cold-outreach/SKILL.md) | Research a prospect and write a personalized 4-message sequence (opener, two follow-ups, break-up) based on real signals from their website — not templates |
+| [ad-analyzer](./skills/marketing-suite/ad-analyzer/SKILL.md) | Analyze competitor ads from Meta Ad Library or pasted copy. Extract hook patterns, offer structures, emotional triggers, and generate test variants with hypotheses |
+
 ---
 
 ## Install
@@ -79,6 +92,8 @@ npx @veyralabs/skills install shopify-dev
 npx @veyralabs/skills install shopify-store
 npx @veyralabs/skills install venture-suite
 npx @veyralabs/skills install venture-analyst
+npx @veyralabs/skills install marketing-suite
+npx @veyralabs/skills install agency-audit
 npx @veyralabs/skills install domainforge
 ```
 
@@ -159,6 +174,8 @@ Each skill is also published as a standalone npm package if you only want one:
 - `@veyralabs/shopify-store`
 - `@veyralabs/venture-suite`
 - `@veyralabs/venture-analyst`
+- `@veyralabs/marketing-suite`
+- `@veyralabs/agency-audit`
 
 ---
 
