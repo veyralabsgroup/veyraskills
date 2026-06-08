@@ -1,0 +1,55 @@
+# VeyraSkills
+
+> Open-source skills for Claude Code and AI coding agents — built by VeyraLabs
+
+VeyraSkills is a collection of Markdown-based skills that teach AI coding agents (Claude Code, Cursor, Windsurf, Gemini CLI, GitHub Copilot) specialized workflows. Install once, activate with a slash command.
+
+## Install
+
+```bash
+npx @veyralabs/skills install <skill-name>
+```
+
+## Skills
+
+### naming-suite
+Four skills for product naming and brand intelligence.
+- /domainforge — generate startup name candidates scored on 8 factors: memorability, distinctiveness, domain availability, trademark risk, pronunciation, spelling, brandability, market fit
+- /brandaudit — audit an existing brand across 8 dimensions, returns severity scores and rebrand verdict
+- /competitornames — map competitor naming patterns, identify saturation and open whitespace
+- /namingguide — build a naming system for a company or product line with principles, patterns, and anti-patterns
+
+### shopify-suite
+Two skills for the full Shopify stack.
+- /shopify-dev — Shopify development: Liquid themes, custom apps, Storefront/Admin GraphQL, Hydrogen, CLI, checkout extensions. Live docs via Context7.
+- /shopify-store — 6-dimension store audit (catalog, navigation, SEO, app stack, CRO signals). Works MCP-connected or public.
+
+### venture-suite
+Idea validation for founders and product builders.
+- /venture-analyst — 4-phase validation: problem discovery from real sources (HN, Reddit, GitHub), competitor intelligence, validation experiments (Mom Test, fake door, concierge MVP), Bull/Bear/Judge verdict with confidence score
+
+### webcloner
+Visual cloning of any landing page into Next.js.
+- /webcloner — 6-phase clone: recon with Scrapling, foundation setup, spec per section, parallel component build, assembly, screenshot QA
+
+### marketing-suite
+Five skills for marketing agencies and sales teams.
+- /agency-audit — website audit and pitch proposal: SEO, tech stack, competitor comparison, opportunity score, revenue projection
+- /retainer-finder — MRR analysis and retainer brief with transition path from project to monthly contract
+- /meeting-prep — 5-minute sales brief from prospect research with evidence-based pain points and rapport-building insight
+- /cold-outreach — personalized 4-message sequences based on real website signals, not templates
+- /ad-analyzer — competitor ad analysis from Meta Ad Library: hook patterns, offer structures, emotional triggers, test variants
+
+## Web tools
+
+- saas-reverse (https://github.com/veyralabsgroup/saas-reverse) — reverse-engineer any SaaS into a build blueprint. Enter a domain, get moat analysis, churn vectors, tech stack, business model, and a build prompt.
+
+## How skills work
+
+Skills are Markdown files with a YAML header. The agent reads them at startup and activates them based on natural language triggers. No configuration, no plugins, no API keys required for most skills.
+
+## Source
+
+https://github.com/veyralabsgroup/veyraskills
+
+Built by VeyraLabs — https://veyralabs.com
