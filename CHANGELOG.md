@@ -6,6 +6,14 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [0.8.1] — 2026-07-02
+
+### Changed
+
+- `codegraph-usage` — reworked from upstream review feedback into a leaner, agent-facing playbook: dropped the community/contributing framing, removed the now-unnecessary monorepo `projectPath` workaround, marked `affected` as CLI-only, clarified `node` vs `read`, and softened "trust results" to allow grep/read fallback for truncated or missing output.
+
+---
+
 ## [0.8.0] — 2026-07-02
 
 ### Added
