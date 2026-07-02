@@ -1,6 +1,6 @@
 # VeyraSkills
 
-![skills](https://img.shields.io/badge/skills-13-blue) ![npm](https://img.shields.io/npm/v/@veyralabs/skills) ![license](https://img.shields.io/badge/license-MIT-green)
+![skills](https://img.shields.io/badge/skills-14-blue) ![npm](https://img.shields.io/npm/v/@veyralabs/skills) ![license](https://img.shields.io/badge/license-MIT-green)
 
 Skills for Claude Code and other AI coding agents. Each skill is a plain text file that teaches your agent a specialized workflow — naming, branding, website cloning, Shopify development, marketing intelligence, idea validation, and more.
 
@@ -78,6 +78,16 @@ Five skills for marketing agencies and sales teams — from prospect research to
 | [cold-outreach](./skills/marketing-suite/cold-outreach/SKILL.md) | Research a prospect and write a personalized 4-message sequence (opener, two follow-ups, break-up) based on real signals from their website — not templates |
 | [ad-analyzer](./skills/marketing-suite/ad-analyzer/SKILL.md) | Analyze competitor ads from Meta Ad Library or pasted copy. Extract hook patterns, offer structures, emotional triggers, and generate test variants with hypotheses |
 
+### codegraph-usage
+
+Field guide for [CodeGraph](https://github.com/colbymchenry/codegraph) — the local semantic code-intelligence tool for AI agents. Contributed upstream by VeyraLabs ([codegraph#1117](https://github.com/colbymchenry/codegraph/pull/1117)).
+
+| Skill | What it does |
+|-------|-------------|
+| [codegraph-usage](./skills/codegraph-usage/SKILL.md) | Teaches your agent to use CodeGraph well: when to reach for it (and when not), tool selection table (`explore`/`node`/`callers`/`callees`/`impact`/`affected`), and community-reported gotchas — impact vs callers, staleness banners, monorepo `projectPath`, CLI-without-MCP for containers |
+
+Requires CodeGraph installed and the project indexed (`codegraph init`).
+
 ---
 
 ## Install
@@ -95,6 +105,7 @@ npx @veyralabs/skills install venture-analyst
 npx @veyralabs/skills install marketing-suite
 npx @veyralabs/skills install agency-audit
 npx @veyralabs/skills install domainforge
+npx @veyralabs/skills install codegraph-usage
 ```
 
 ### All skills

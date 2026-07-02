@@ -6,6 +6,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [0.8.0] — 2026-07-02
+
+### Added
+
+- `codegraph-usage` skill — field guide for [CodeGraph](https://github.com/colbymchenry/codegraph)
+  - When to reach for CodeGraph and when not (structural vs semantic search)
+  - Tool selection table: `explore`, `node`, `query`, `callers`, `callees`, `impact`, `affected`
+  - Community-reported gotchas: impact vs callers, staleness banners, monorepo `projectPath`, CLI-without-MCP for containers
+  - Contributed upstream in [codegraph#1117](https://github.com/colbymchenry/codegraph/pull/1117)
+
+---
+
 ## [0.1.0] — 2025-05-30
 
 ### Added
